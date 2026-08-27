@@ -1,0 +1,12 @@
+# Bulk-mirrored library media. The site streams from the publishers' CDNs, so
+# this is only ever a local copy — regenerate with scripts/mirror_library.py.
+/media/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# editors / tooling
+.vscode/
+.idea/
+*.log

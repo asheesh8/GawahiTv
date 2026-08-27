@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GAWAHI Television — A Voice of Hope to the Nations</title>
+<meta name="description" content="GAWAHI Television — news, programmes and a free Sindhi and Urdu Scripture library you can watch, listen to, read and download.">
+<link rel="icon" href="assets/img/gawahi-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&family=Noto+Nastaliq+Urdu:wght@400..700&family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+/* Apply the saved language before first paint so RTL never flashes. */
+(function(){try{var l=localStorage.getItem('gawahi-lang');
+if(l==='ur'||l==='sd'){var r=document.documentElement;r.lang=l;r.dir='rtl';
+r.dataset.font=l==='ur'?'nastaliq':'naskh';}}catch(e){}})();
+</script>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/gawahi-logo.png" alt="">
+      <span><b>GAWAHI</b><small data-i18n="brand.tv">Television</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="library.html" data-i18n="nav.library">Library</a>
+      <a href="news.html" data-i18n="nav.news">News</a>
+      <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="hdr-act">
+      <div class="lang-switch" id="langSwitch" role="group" data-i18n-aria="nav.lang"></div>
+      <a class="btn btn-p btn-sm" href="library.html" data-i18n="nav.browse" style="white-space:nowrap">Browse the Library</a>
+      <button class="icon-btn" id="themeBtn" data-i18n-aria="nav.theme" aria-label="Toggle theme"></button>
+      <button class="icon-btn burger" id="burger" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false" aria-controls="nav"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============================= hero ============================= -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+    <img class="hero-fish" src="assets/img/gawahi-logo.png" alt="" aria-hidden="true">
+    <div class="hero-in">
+      <div>
+        <p class="eyebrow" style="color:var(--gold-500)" data-i18n="hero.eyebrow">A Voice of Hope to the Nations</p>
+        <h1><span data-i18n="hero.title.a">Bringing God's Word to </span><em data-i18n="hero.title.em">every home</em><span data-i18n="hero.title.b">.</span></h1>
+        <p class="lede" data-i18n="hero.lede">Gawahi Television broadcasts news, teaching and programmes.</p>
+        <div class="hero-cta">
+          <a class="btn btn-g" href="library.html" id="heroCta" data-i18n="hero.cta1">Open the Library</a>
+          <a class="btn btn-o" href="#programmes" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" data-i18n="hero.cta2">Watch now</a>
+        </div>
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+      <div class="prog-panel" id="progPanel">
+        <span class="chip chip-live badge" style="position:absolute;top:1rem;inset-inline-start:1rem;z-index:3" data-i18n="badge.onair">On air</span>
+        <span class="veil"></span>
+        <div class="prog-meta">
+          <h3 id="progName"></h3>
+          <p id="progBlurb"></p>
+          <div class="prog-dots" id="progDots" role="tablist" aria-label="Featured programmes"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= languages ============================= -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div>
+          <p class="eyebrow" data-i18n="lang.eyebrow">The Library</p>
+          <h2 data-i18n="lang.title">Scripture in the languages of home.</h2>
+          <p data-i18n="lang.blurb">Films, audio Bibles, recordings and historic scans.</p>
+        </div>
+        <a class="btn btn-o" href="library.html" data-i18n="lang.cta">See all resources</a>
+      </div>
+      <div class="lang-grid" id="langCards"></div>
+    </div>
+  </section>
+
+  <!-- ============================= programmes ============================= -->
+  <section class="sec" id="programmes">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="eyebrow" data-i18n="prog.eyebrow">On Gawahi</p><h2 data-i18n="prog.title">Our programmes</h2>
+          <p data-i18n="prog.blurb">News, teaching, drama and conversation.</p></div>
+        <a class="btn btn-o" href="schedule.html" data-i18n="prog.cta">See the schedule</a>
+      </div>
+      <div class="grid g-3" id="progGrid"></div>
+      <div style="margin-top:1.5rem">
+        <video id="heroVideo" controls playsinline preload="metadata"
+               poster="assets/img/gawahi/The-Enlightened-Mind-1-1024x575.jpg"
+               src="assets/img/gawahi/The-Enlighted-Minds-with-GAWAHI-TELEVISION.mp4"
+               style="width:100%;border-radius:var(--r);background:#000;box-shadow:var(--shadow-lg)"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= films rail ============================= -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="eyebrow" data-i18n="film.eyebrow">Watch</p><h2 data-i18n="film.title">Films to watch now</h2>
+          <p data-i18n="film.blurb">Full-length features and short films.</p></div>
+        <a class="btn btn-o" href="library.html?type=film" data-i18n="film.cta">All films</a>
+      </div>
+      <div class="rail" id="filmRail"></div>
+    </div>
+  </section>
+
+  <!-- ============================= listen ============================= -->
+  <section class="sec band">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="eyebrow" data-i18n="listen.eyebrow">Listen</p>
+          <h2 data-i18n="listen.title">Hear every chapter</h2>
+          <p data-i18n="listen.blurb">Complete audio Bibles in Urdu and Sindhi.</p></div>
+        <a class="btn btn-o" href="library.html?type=audio-bible" data-i18n="listen.cta">All audio</a>
+      </div>
+      <div class="rail" id="audioRail"></div>
+    </div>
+  </section>
+
+  <!-- ============================= read ============================= -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="eyebrow" data-i18n="read.eyebrow">Read</p>
+          <h2 data-i18n="read.title">Scripture and historic print</h2>
+          <p data-i18n="read.blurb">Modern translations and historic scans.</p></div>
+        <a class="btn btn-o" href="library.html?type=historic" data-i18n="read.cta">All reading</a>
+      </div>
+      <div class="rail" id="readRail"></div>
+    </div>
+  </section>
+
+  <!-- ============================= news ============================= -->
+  <section class="sec band">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="eyebrow" data-i18n="news.eyebrow">Latest</p><h2 data-i18n="news.title">From the newsroom</h2></div>
+        <a class="btn btn-o" href="news.html" data-i18n="news.cta">All stories</a>
+      </div>
+      <div class="grid g-2" id="newsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============================= gallery ============================= -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><p class="eyebrow" data-i18n="gal.eyebrow">In pictures</p><h2 data-i18n="gal.title">Life at Gawahi</h2>
+          <p data-i18n="gal.blurb">Moments from our studios and our people.</p></div>
+        <a class="btn btn-o" href="news.html#gallery" data-i18n="gal.cta">Full gallery</a>
+      </div>
+      <div class="grid g-4" id="galleryStrip"></div>
+    </div>
+  </section>
+
+  <!-- ============================= cta ============================= -->
+  <section class="sec band-dark">
+    <div class="wrap" style="text-align:center;max-width:760px">
+      <p class="eyebrow" style="color:var(--gold-500);justify-content:center" data-i18n="cta.eyebrow">Free, always</p>
+      <h2 style="text-wrap:balance" data-i18n="cta.title">Every resource here is free.</h2>
+      <p style="margin-top:1rem" data-i18n="cta.body">Nothing is locked and everything can be taken offline.</p>
+      <div class="hero-cta" style="justify-content:center;margin-top:1.8rem">
+        <a class="btn btn-g" href="library.html" data-i18n="cta.a">Start exploring</a>
+        <a class="btn btn-o" href="about.html" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" data-i18n="cta.b">About Gawahi</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="assets/img/gawahi-logo.png" alt="Gawahi Television">
+        <p data-i18n="ftr.blurb">A voice of hope to the nations.</p>
+      </div>
+      <div><h4 data-i18n="ftr.watch">Watch</h4><ul>
+        <li><a href="library.html?type=film" data-i18n="ftr.films">Films</a></li>
+        <li><a href="schedule.html" data-i18n="ftr.tv">TV schedule</a></li>
+        <li><a href="news.html" data-i18n="ftr.news">News &amp; stories</a></li>
+      </ul></div>
+      <div><h4 data-i18n="ftr.library">Library</h4><ul>
+        <li><a href="library.html?lang=urd" data-i18n="ftr.urdu">Urdu resources</a></li>
+        <li><a href="library.html?lang=snd" data-i18n="ftr.sindhi">Sindhi resources</a></li>
+        <li><a href="library.html?type=audio-bible" data-i18n="ftr.ab">Audio Bibles</a></li>
+        <li><a href="library.html?type=historic" data-i18n="ftr.hist">Historic scans</a></li>
+      </ul></div>
+      <div><h4 data-i18n="ftr.gawahi">Gawahi</h4><ul>
+        <li><a href="about.html" data-i18n="ftr.about">About us</a></li>
+        <li><a href="https://gawahi.tv/contact/" data-i18n="ftr.contact">Contact</a></li>
+        <li><a href="https://gawahi.tv/faqs/" data-i18n="ftr.faq">FAQs</a></li>
+        <li><a href="https://gawahi.tv/privacy-policy/" data-i18n="ftr.privacy">Privacy</a></li>
+      </ul></div>
+    </div>
+    <div class="ftr-btm">
+      <span id="ftrRights"></span>
+      <span data-i18n="ftr.credit">Library resources courtesy of the Digital Bible Society and partners.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet"><div class="sheet-bg" id="sheetBg"></div><div class="sheet-panel" id="sheetPanel" role="dialog" aria-modal="true"></div></div>
+<script type="module" src="assets/js/home.js"></script>
+</body>
+</html>

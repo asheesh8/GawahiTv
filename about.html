@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About — Gawahi Television</title>
+<meta name="description" content="About Gawahi Television: a voice of hope to the nations, broadcasting and publishing free Scripture resources in Sindhi and Urdu.">
+<link rel="icon" href="assets/img/gawahi-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&family=Noto+Nastaliq+Urdu:wght@400..700&family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+/* Apply the saved language before first paint so RTL never flashes. */
+(function(){try{var l=localStorage.getItem('gawahi-lang');
+if(l==='ur'||l==='sd'){var r=document.documentElement;r.lang=l;r.dir='rtl';
+r.dataset.font=l==='ur'?'nastaliq':'naskh';}}catch(e){}})();
+</script>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/gawahi-logo.png" alt="">
+      <span><b>GAWAHI</b><small data-i18n="brand.tv">Television</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="library.html" data-i18n="nav.library">Library</a>
+      <a href="news.html" data-i18n="nav.news">News</a>
+      <a href="schedule.html" data-i18n="nav.schedule">Schedule</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="hdr-act">
+      <div class="lang-switch" id="langSwitch" role="group" data-i18n-aria="nav.lang"></div>
+      <a class="btn btn-p btn-sm" href="library.html" data-i18n="nav.browse" style="white-space:nowrap">Browse the Library</a>
+      <button class="icon-btn" id="themeBtn" data-i18n-aria="nav.theme" aria-label="Toggle theme"></button>
+      <button class="icon-btn burger" id="burger" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false" aria-controls="nav"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="lib-head">
+    <div class="wrap">
+      <p class="eyebrow" style="color:var(--gold-500)" data-i18n="about.eyebrow">Who we are</p>
+      <h1 data-i18n="about.title">A voice of hope to the nations.</h1>
+      <p data-i18n="about.lede">Gawahi Television exists to bring God's Word to every home.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap" style="max-width:760px">
+      <p style="font-size:var(--t-md)" data-i18n="about.p1">Gawahi broadcasts news, teaching and programming.</p>
+
+      <div class="facts" style="margin:2rem 0">
+        <div><dt data-i18n="about.f1">Founded on</dt><dd data-i18n="about.f1v">Bringing God's Word to every home</dd></div>
+        <div><dt data-i18n="about.f2">Languages</dt><dd data-i18n="about.f2v">Sindhi &amp; Urdu</dd></div>
+        <div><dt data-i18n="about.f3">Library</dt><dd id="aboutCount">—</dd></div>
+        <div><dt data-i18n="about.f4">Cost to you</dt><dd data-i18n="about.f4v">Free, always</dd></div>
+      </div>
+
+      <h3 style="margin-top:2.5rem" data-i18n="about.h1">What we broadcast</h3>
+      <p style="color:var(--ink-mute)" data-i18n="about.b1">News, teaching programmes, podcasts and films.</p>
+
+      <h3 style="margin-top:2rem" data-i18n="about.h2">The library</h3>
+      <p style="color:var(--ink-mute)" data-i18n="about.b2">We index and present resources published free of charge.</p>
+
+      <div class="hero-cta" style="margin-top:2rem">
+        <a class="btn btn-p" href="library.html" data-i18n="about.cta1">Browse the library</a>
+        <a class="btn btn-o" href="https://gawahi.tv/contact/" data-i18n="about.cta2">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec band">
+    <div class="wrap">
+      <div class="sec-hd"><div><p class="eyebrow" data-i18n="about.pEyebrow">Partners</p>
+        <h2 style="font-size:var(--t-xl)" data-i18n="about.pTitle">Who makes this possible</h2></div></div>
+      <div class="grid g-4" id="partners"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="assets/img/gawahi-logo.png" alt="Gawahi Television">
+        <p data-i18n="ftr.blurb">A voice of hope to the nations.</p>
+      </div>
+      <div><h4 data-i18n="ftr.watch">Watch</h4><ul>
+        <li><a href="library.html?type=film" data-i18n="ftr.films">Films</a></li>
+        <li><a href="schedule.html" data-i18n="ftr.tv">TV schedule</a></li>
+        <li><a href="news.html" data-i18n="ftr.news">News &amp; stories</a></li>
+      </ul></div>
+      <div><h4 data-i18n="ftr.library">Library</h4><ul>
+        <li><a href="library.html?lang=urd" data-i18n="ftr.urdu">Urdu resources</a></li>
+        <li><a href="library.html?lang=snd" data-i18n="ftr.sindhi">Sindhi resources</a></li>
+        <li><a href="library.html?type=audio-bible" data-i18n="ftr.ab">Audio Bibles</a></li>
+        <li><a href="library.html?type=historic" data-i18n="ftr.hist">Historic scans</a></li>
+      </ul></div>
+      <div><h4 data-i18n="ftr.gawahi">Gawahi</h4><ul>
+        <li><a href="about.html" data-i18n="ftr.about">About us</a></li>
+        <li><a href="https://gawahi.tv/contact/" data-i18n="ftr.contact">Contact</a></li>
+        <li><a href="https://gawahi.tv/faqs/" data-i18n="ftr.faq">FAQs</a></li>
+        <li><a href="https://gawahi.tv/privacy-policy/" data-i18n="ftr.privacy">Privacy</a></li>
+      </ul></div>
+    </div>
+    <div class="ftr-btm">
+      <span id="ftrRights"></span>
+      <span data-i18n="ftr.credit">Library resources courtesy of the Digital Bible Society and partners.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet"><div class="sheet-bg" id="sheetBg"></div><div class="sheet-panel" id="sheetPanel" role="dialog" aria-modal="true"></div></div>
+<script type="module" src="assets/js/about.js"></script>
+</body>
+</html>
