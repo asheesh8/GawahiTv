@@ -1,0 +1,9 @@
+# Never deployed to the public site: build tooling, internal notes, local config.
+scripts/
+.claude/
+media/
+README.md
+data/posts_i18n.json
+*.py
+*.log
+.DS_Store

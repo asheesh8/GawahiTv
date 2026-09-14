@@ -2003,14 +2003,8 @@
      }
     ]
    },
-   "downloads": [
-    {
-     "label": "Lumo: John (MP4)",
-     "url": "https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-4-john.mp4",
-     "external": true
-    }
-   ],
    "source": "https://dbs.org/video/lumo-john/urd_urdu_john",
+   "downloads": [],
    "read": null,
    "native": null,
    "year": null,
@@ -2148,46 +2142,6 @@
    },
    "source": "https://dbs.org/video/lumo-covenant/urd_urdu_covenant",
    "downloads": [],
-   "read": null,
-   "native": null,
-   "year": null,
-   "duration": null,
-   "stats": null,
-   "license": null,
-   "scope": null,
-   "langName": "Urdu",
-   "typeLabel": "Films"
-  },
-  {
-   "id": "urd-film-lumo-mark",
-   "lang": "urd",
-   "type": "film",
-   "title": "LUMO: The Gospel of Mark",
-   "org": "LUMO Project",
-   "cover": "https://meta.dbs.org/data/data-video/covers/Lumo-Mark/lumo_mark.webp",
-   "desc": "The Gospel of Mark filmed word for word from the Urdu Scripture text.",
-   "play": {
-    "kind": "file",
-    "hd": "https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-2-mark.mp4"
-   },
-   "downloads": [
-    {
-     "label": "Lumo: Mark (MP4)",
-     "url": "https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-2-mark.mp4",
-     "external": true
-    },
-    {
-     "label": "Lumo: Matthew (MP4)",
-     "url": "https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-1-matthew.mp4",
-     "external": true
-    },
-    {
-     "label": "Lumo: Luke (MP4)",
-     "url": "https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-3-luke.mp4",
-     "external": true
-    }
-   ],
-   "source": "https://dbs.org/discover/languages/urd",
    "read": null,
    "native": null,
    "year": null,

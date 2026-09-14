@@ -1,6 +1,6 @@
 /* GAWAHI — news list, single story, and the full gallery */
 import { $, $$, esc, ICONS, reveal, loadJSON, fmtDate, t, onLangChange, i18nReady,
-         latinClass, postField } from './app.js';
+         latinClass, postField, safeUrl } from './app.js';
 
 (async function init() {
   await i18nReady;
@@ -35,7 +35,7 @@ import { $, $$, esc, ICONS, reveal, loadJSON, fmtDate, t, onLangChange, i18nRead
             const p = Math.floor(i / 3); (acc[p] ||= []).push(s); return acc;
           }, []).map(par => `<p>${esc(par.join(' '))}</p>`).join('')}
         </div>
-        <p style="margin-top:2rem"><a class="btn btn-o btn-sm" href="${esc(post.link)}"
+        <p style="margin-top:2rem"><a class="btn btn-o btn-sm" href="${esc(safeUrl(post.link))}"
            target="_blank" rel="noopener">${ICONS.external} ${esc(t('news.onsite'))}</a></p>
       </article>
       <hr style="margin:3rem 0;border:0;border-top:1px solid var(--line)">

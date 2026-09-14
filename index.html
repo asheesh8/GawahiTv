@@ -10,12 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&family=Noto+Nastaliq+Urdu:wght@400..700&family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<script>
-/* Apply the saved language before first paint so RTL never flashes. */
-(function(){try{var l=localStorage.getItem('gawahi-lang');
-if(l==='ur'||l==='sd'){var r=document.documentElement;r.lang=l;r.dir='rtl';
-r.dataset.font=l==='ur'?'nastaliq':'naskh';}}catch(e){}})();
-</script>
+<script src="assets/js/boot.js"></script>
 </head>
 <body>
 
@@ -53,17 +48,27 @@ r.dataset.font=l==='ur'?'nastaliq':'naskh';}}catch(e){}})();
         <p class="lede" data-i18n="hero.lede">Gawahi Television broadcasts news, teaching and programmes.</p>
         <div class="hero-cta">
           <a class="btn btn-g" href="library.html" id="heroCta" data-i18n="hero.cta1">Open the Library</a>
-          <a class="btn btn-o" href="#programmes" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" data-i18n="hero.cta2">Watch now</a>
+          <a class="btn btn-o" href="#live" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" data-i18n="hero.cta2">Watch now</a>
         </div>
         <div class="hero-stats" id="heroStats"></div>
       </div>
-      <div class="prog-panel" id="progPanel">
-        <span class="chip chip-live badge" style="position:absolute;top:1rem;inset-inline-start:1rem;z-index:3" data-i18n="badge.onair">On air</span>
-        <span class="veil"></span>
-        <div class="prog-meta">
-          <h3 id="progName"></h3>
-          <p id="progBlurb"></p>
-          <div class="prog-dots" id="progDots" role="tablist" aria-label="Featured programmes"></div>
+      <div class="live" id="live">
+        <div class="live-screen" id="liveScreen">
+          <div id="livePlayer"></div>
+          <button class="live-sound" id="liveSound" type="button" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m22 9-6 6m0-6 6 6"/></svg>
+            <span data-i18n="live.sound">Tap for sound</span>
+          </button>
+        </div>
+        <div class="live-meta">
+          <div class="live-bar">
+            <span class="live-badge" data-i18n="live.badge">Live</span>
+            <p class="live-label" data-i18n="live.now">Now playing</p>
+            <button class="live-back" id="liveBack" type="button" hidden data-i18n="live.back">Back to live</button>
+          </div>
+          <h3 class="live-title" id="liveTitle"></h3>
+          <p class="live-label live-label-next" data-i18n="live.next">Up next</p>
+          <ol class="live-next" id="liveNext"></ol>
         </div>
       </div>
     </div>

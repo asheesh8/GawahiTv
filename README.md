@@ -151,6 +151,57 @@ Latin actively break them. What the stylesheet does about it:
 
 ---
 
+## Gawahi Live
+
+The home page hero plays the channel's YouTube uploads as a continuous broadcast.
+Every visitor computes the same position from the clock — the playlist loops from a
+fixed anchor — so two people opening the site at the same moment see the same
+programme at the same second. The schedule page reads the same timeline, so its
+"On now" row is exactly what the home page is playing.
+
+- `assets/js/live.js` — timeline maths and the YouTube IFrame player
+  (privacy-enhanced `youtube-nocookie.com` host, muted autoplay with a
+  "Tap for sound" control, auto-skip if a video is removed or not embeddable).
+- `data/youtube.json` — built by `python3 scripts/build_youtube.py`, which scrapes
+  the channel's /videos tab (titles + durations) and falls back to RSS. **Re-run it
+  after new uploads** and redeploy; a Vercel cron or GitHub Action could automate it.
+
+---
+
+## Security
+
+Static site, no server code, no forms, no auth, no cookies — the attack surface is
+the browser. What is in place:
+
+- **Content-Security-Policy** (`vercel.json`): scripts only from self and the YouTube
+  IFrame API; media, images and frames limited to the exact hosts the catalogue uses;
+  `object-src 'none'`, `base-uri 'self'`, `frame-ancestors 'none'`,
+  `upgrade-insecure-requests`. No inline scripts or inline event handlers anywhere, so
+  `script-src` needs no `'unsafe-inline'`. (`style-src` keeps it for layout `style=""`
+  attributes — there is no path for injecting style markup.)
+- **HSTS** (2 years, preload-ready), `X-Frame-Options: DENY`, `nosniff`,
+  `Referrer-Policy`, `COOP`, and a Permissions-Policy that denies camera, mic,
+  geolocation, payment and FLoC/Topics while allowing autoplay/fullscreen only for the
+  YouTube and PDF frames.
+- **Output encoding**: every data value rendered into HTML goes through `esc()`.
+  Every URL from data also goes through `safeUrl()` (only http/https/relative survive —
+  escaping does not stop a `javascript:` href), and URLs placed in CSS go through
+  `cssUrl()` (the HTML parser decodes `&#39;` before CSS sees it, so HTML-escaping
+  alone cannot stop a `url()` breakout). YouTube IDs are regex-validated.
+- **Deep links** (`?r=`, `?p=`, `?q=`) are only ever used as lookup keys or input
+  values, never written into markup.
+- **Tabnabbing**: every `target="_blank"` carries `rel="noopener"`.
+- **`.vercelignore`** keeps build scripts, this README, local config and translation
+  sources off the public site.
+- `node scripts/serve.mjs` applies the same headers as production, so a policy that
+  would break the live site breaks locally first.
+
+Residual items for the owner: the GitHub repository is public (make it private if the
+build notes should not be readable); YouTube and Google Fonts are third-party
+dependencies loaded without SRI, which is unavoidable for both.
+
+---
+
 ## Design
 
 Purple and gold, sampled from the ichthys in Gawahi's own logo (`#7B3C90`, `#C9A45C`)

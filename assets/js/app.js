@@ -3,6 +3,21 @@ import { i18nReady, t, onLangChange, lang } from './i18n.js';
 export { t, onLangChange, lang, i18nReady };
 export const $  = (s, r = document) => r.querySelector(s);
 export const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+/** Only http(s) and same-site relative URLs survive; anything else (javascript:,
+ *  data:, vbscript:) becomes "#". Escaping alone does not stop a javascript:
+ *  href from running, so every URL that comes from data goes through this. */
+export function safeUrl(u) {
+  if (u == null || u === '') return '#';
+  try {
+    const x = new URL(String(u), location.href);
+    return x.protocol === 'https:' || x.protocol === 'http:' ? x.href : '#';
+  } catch { return '#'; }
+}
+/** For CSS url(): the HTML parser decodes &#39; back to a quote before CSS sees
+ *  it, so HTML-escaping is not enough — percent-encode the breakout characters. */
+export const cssUrl = u => safeUrl(u).replace(/["'()\\\s<>]/g,
+  c => '%' + c.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0'));
+
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
   ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
@@ -182,6 +197,13 @@ function paintFooter() {
   const yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
 }
+
+/* Broken artwork hides itself. Replaces the old inline onerror="" handler, which a
+   strict script CSP would block. Error events don't bubble, so listen in capture. */
+document.addEventListener('error', e => {
+  const el = e.target;
+  if (el && el.tagName === 'IMG' && el.hasAttribute('data-hide-on-error')) el.remove();
+}, true);
 
 initTheme(); initHeader();
 i18nReady.then(() => { paintFooter(); onLangChange(paintFooter); });

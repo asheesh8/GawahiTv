@@ -1,6 +1,6 @@
 /* GAWAHI — the resource sheet: players, reader and downloads. Shared by every page. */
 
-import { $, $$, esc, ICONS, t, onLangChange, isLatinText } from './app.js';
+import { $, $$, esc, ICONS, t, onLangChange, isLatinText, safeUrl, cssUrl } from './app.js';
 
 const CDN_AUDIO = 'https://dbs.org/cdn/audio';
 
@@ -33,7 +33,7 @@ export function card(r) {
   // Audio Bibles and text editions ship no artwork. Rather than leave a bare
   // gradient, set the native title on it — it reads as a designed cover.
   const cover = r.cover
-    ? `<img src="${esc(r.cover)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`
+    ? `<img src="${esc(safeUrl(r.cover))}" alt="" loading="lazy" decoding="async" data-hide-on-error>`
     : (() => {
         // Many partner records carry no native title, so this falls back to the
         // English one — set it in the Latin face, not Nastaliq.
@@ -78,10 +78,10 @@ function chapterPlayer(r) {
   return {
     html: `
       <div class="player" id="pl">
-        ${r.cover ? `<div class="player-poster" id="poster" style="background-image:url('${esc(r.cover)}')">
+        ${r.cover ? `<div class="player-poster" id="poster" style="background-image:url('${esc(cssUrl(r.cover))}')">
             <i>${ICONS.play}</i></div>` : ''}
         <video id="vid" controls preload="metadata" playsinline
-               ${r.cover ? `poster="${esc(r.cover)}"` : ''} src="${esc(src(0))}"></video>
+               ${r.cover ? `poster="${esc(safeUrl(r.cover))}"` : ''} src="${esc(safeUrl(src(0)))}"></video>
       </div>
       <div class="chapters">
         <div class="chapters-hd"><span>${items.length} ${esc(t(items.length > 20 ? 'sheet.chapters' : 'sheet.parts'))}</span>
@@ -95,7 +95,7 @@ function chapterPlayer(r) {
       const vid = $('#vid', root), poster = $('#poster', root);
       let cur = 0;
       const go = (i, autoplay = true) => {
-        cur = i; vid.src = src(i); vid.load();
+        cur = i; vid.src = safeUrl(src(i)); vid.load();
         if (autoplay) vid.play().catch(() => {});
         poster?.remove();
         $$('#chapList button', root).forEach(b =>
@@ -117,11 +117,11 @@ function filePlayer(r) {
   return {
     html: `
       <div class="player">
-        ${r.cover ? `<div class="player-poster" id="poster" style="background-image:url('${esc(r.cover)}')">
+        ${r.cover ? `<div class="player-poster" id="poster" style="background-image:url('${esc(cssUrl(r.cover))}')">
             <i>${ICONS.play}</i></div>` : ''}
         <video id="vid" controls preload="metadata" playsinline
-               ${r.cover ? `poster="${esc(r.cover)}"` : ''}>
-          <source src="${esc(primary)}" type="video/mp4">
+               ${r.cover ? `poster="${esc(safeUrl(r.cover))}"` : ''}>
+          <source src="${esc(safeUrl(primary))}" type="video/mp4">
         </video>
       </div>
       ${p.hd && p.sd ? `<div class="seg" style="margin-bottom:1.2rem" id="qual">
@@ -133,7 +133,7 @@ function filePlayer(r) {
       $('#qual', root)?.addEventListener('click', e => {
         const b = e.target.closest('button[data-q]'); if (!b) return;
         const at = vid.currentTime, playing = !vid.paused;
-        vid.src = p[b.dataset.q]; vid.load(); vid.currentTime = at;
+        vid.src = safeUrl(p[b.dataset.q]); vid.load(); vid.currentTime = at;
         if (playing) vid.play().catch(() => {});
         $$('#qual button', root).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
       });
@@ -151,7 +151,7 @@ function audioBiblePlayer(r) {
       <div class="audio-player">
         <h4 class="latin" id="abNow">${esc(spaced(list[0][2]))} 1</h4>
         <p class="latin">${esc(r.title)} — ${esc(r.org)}</p>
-        <audio id="aud" controls preload="none" src="${esc(url(list[0][0], list[0][1], list[0][2], 1))}"></audio>
+        <audio id="aud" controls preload="none" src="${esc(safeUrl(url(list[0][0], list[0][1], list[0][2], 1)))}"></audio>
       </div>
       <div class="chapters">
         <div class="chapters-hd">
@@ -174,7 +174,7 @@ function audioBiblePlayer(r) {
       const go = (chapter) => {
         ci = chapter;
         const [test, num, name] = list[bi];
-        aud.src = url(test, num, name, ci); aud.play().catch(() => {});
+        aud.src = safeUrl(url(test, num, name, ci)); aud.play().catch(() => {});
         $('#abNow', root).textContent = `${spaced(name)} ${ci}`;
         $$('#chGrid button', root).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.c === ci)));
       };
@@ -193,7 +193,7 @@ function audioCollectionPlayer(r) {
     html: `<div class="audio-player">
         <h4 class="latin">${esc(r.title)}</h4>
         <p class="latin">${esc(r.org)}${r.stats ? ' — ' + esc(r.stats) : ''}</p>
-        <audio controls preload="none" src="${esc(r.play.sample)}"></audio>
+        <audio controls preload="none" src="${esc(safeUrl(r.play.sample))}"></audio>
       </div>
       <p class="note">${esc(t('sheet.collNote'))}</p>`,
     wire() {}
@@ -202,7 +202,7 @@ function audioCollectionPlayer(r) {
 
 function readerBlock(r) {
   return `<div class="reader">
-      <iframe src="${esc(r.read.url)}#view=FitH" title="${esc(r.title)} — reader" loading="lazy"></iframe>
+      <iframe src="${esc(safeUrl(r.read.url))}#view=FitH" referrerpolicy="strict-origin-when-cross-origin" title="${esc(r.title)} — reader" loading="lazy"></iframe>
     </div>`;
 }
 
@@ -221,7 +221,7 @@ function sheetHTML(r) {
   ].filter(([, v]) => v);
 
   const dls = (r.downloads || []).map(d => `
-    <a class="dl" href="${esc(d.url)}"${d.external ? ' target="_blank" rel="noopener"' : ' download'}>
+    <a class="dl" href="${esc(safeUrl(d.url))}"${d.external ? ' target="_blank" rel="noopener"' : ' download'}>
       ${d.external ? ICONS.external : ICONS.download}
       <span class="dl-t latin">${esc(d.label)}</span>
       ${d.size ? `<span class="dl-s">${esc(d.size)}</span>` : ''}
@@ -247,7 +247,7 @@ function sheetHTML(r) {
           <p class="meta" style="margin:.3rem 0 0">${esc(t('sheet.dlNote'))}</p>
           <div class="dl-list">${dls}</div>` : ''}
         <p style="margin-top:1.8rem">
-          <a class="btn btn-o btn-sm" href="${esc(r.source)}" target="_blank" rel="noopener">
+          <a class="btn btn-o btn-sm" href="${esc(safeUrl(r.source))}" target="_blank" rel="noopener">
             ${ICONS.external} ${esc(t('sheet.source'))}</a>
         </p>
       </div>`,

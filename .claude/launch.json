@@ -9,6 +9,16 @@
         "4173"
       ],
       "port": 4173
+    },
+    {
+      "name": "gawahi-audit",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "scripts/serve.mjs",
+        "4174",
+        "--no-headers"
+      ],
+      "port": 4174
     }
   ]
 }

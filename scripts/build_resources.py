@@ -318,7 +318,6 @@ add(id="urd-film-lumo-john", lang="urd", type="film", title="LUMO: The Gospel of
     desc="The Gospel of John filmed word for word, with the Urdu Scripture text as the only narration. 21 parts.",
     play=numbered("https://video.dbs.org/Lumo-John/films_low/urd_Urdu_John_Revised-Urdu-Bible_low/",
                   "urd_LUMO_Urdu_John_Revised-Urdu-Bible_{i:02d}_360.mp4", 21),
-    downloads=[{"label":"Lumo: John (MP4)","url":"https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-4-john.mp4","external":True}],
     source="https://dbs.org/video/lumo-john/urd_urdu_john")
 
 add(id="urd-film-lumo-acts", lang="urd", type="film", title="LUMO: Acts of the Apostles",
@@ -338,15 +337,6 @@ add(id="urd-film-lumo-covenant", lang="urd", type="film", title="LUMO: The Coven
     play=numbered("https://video.dbs.org/Lumo-Covenant/films_low/urd_Urdu_Covenant_Revised-Urdu-Bible/",
                   "urd_Covenant_Urdu_Revised-Urdu-Bible_{i:02d}_360.mp4", 12),
     source="https://dbs.org/video/lumo-covenant/urd_urdu_covenant")
-
-add(id="urd-film-lumo-mark", lang="urd", type="film", title="LUMO: The Gospel of Mark",
-    org="LUMO Project", cover=f"{COV}/Lumo-Mark/lumo_mark.webp",
-    desc="The Gospel of Mark filmed word for word from the Urdu Scripture text.",
-    play=file_play(hd="https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-2-mark.mp4"),
-    downloads=[{"label":"Lumo: Mark (MP4)","url":"https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-2-mark.mp4","external":True},
-               {"label":"Lumo: Matthew (MP4)","url":"https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-1-matthew.mp4","external":True},
-               {"label":"Lumo: Luke (MP4)","url":"https://odi-anusaran.s3.ap-south-1.amazonaws.com/downloads/video/lumo/lumo-urd-3-luke.mp4","external":True}],
-    source="https://dbs.org/discover/languages/urd")
 
 add(id="urd-film-hope", lang="urd", type="film", title="The HOPE", org="Mars Hill Productions",
     duration="1:19:17", cover=f"{COV}/HOPE/urd_urdu.webp",

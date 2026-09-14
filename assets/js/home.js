@@ -1,7 +1,8 @@
 /* GAWAHI — home page composition */
 import { $, $$, esc, ICONS, reveal, loadJSON, fmtDate, t, onLangChange, i18nReady,
-         latinClass, postField } from './app.js';
+         latinClass, postField, safeUrl } from './app.js';
 import { card, setData, mountSheet } from './sheet.js';
+import { loadLive, mountLive, listing, thumb, fmtClock } from './live.js';
 
 const pick = (rows, n) => rows.slice(0, n);
 
@@ -96,40 +97,17 @@ const pick = (rows, n) => rows.slice(0, n);
   const pBlurb = p => t(`prog.${p.stub}.blurb`) || p.blurb;
 
   if (progs.length) {
-    // rotating hero backdrop
+    // the stills now sit behind the hero as a slow, dim rotation
     $('#heroBg').innerHTML = progs.map((p, i) =>
       `<img src="${esc(p.src)}" alt="" class="${i === 0 ? 'on' : ''}">`).join('');
-    // featured panel
-    const panel = $('#progPanel');
-    panel.insertAdjacentHTML('afterbegin', progs.map((p, i) =>
-      `<img src="${esc(p.src)}" alt="${esc(p.name)}" class="${i === 0 ? 'on' : ''}">`).join(''));
-    $('#progDots').innerHTML = progs.map((p, i) =>
-      `<button role="tab" data-i="${i}" aria-pressed="${i === 0}"
-        aria-label="${esc(p.name)}"></button>`).join('');
-
-    const bgImgs = $$('#heroBg img'), panelImgs = $$('#progPanel > img');
-    let cur = 0, timer;
-    const show = i => {
-      cur = i;
-      bgImgs.forEach((el, n) => el.classList.toggle('on', n === i));
-      panelImgs.forEach((el, n) => el.classList.toggle('on', n === i));
-      $$('#progDots button').forEach((b, n) => b.setAttribute('aria-pressed', String(n === i)));
-      $('#progName').textContent = pName(progs[i]);
-      $('#progBlurb').textContent = pBlurb(progs[i]);
-    };
-    const start = () => {
-      if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-      timer = setInterval(() => show((cur + 1) % progs.length), 5200);
-    };
-    $('#progDots').addEventListener('click', e => {
-      const b = e.target.closest('button[data-i]'); if (!b) return;
-      clearInterval(timer); show(+b.dataset.i); start();
-    });
-    panel.addEventListener('mouseenter', () => clearInterval(timer));
-    panel.addEventListener('mouseleave', start);
-    show(0); start();
-
-    // grid of every programme
+    const bgImgs = $$('#heroBg img');
+    let bg = 0;
+    if (!matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      setInterval(() => {
+        bg = (bg + 1) % bgImgs.length;
+        bgImgs.forEach((el, n) => el.classList.toggle('on', n === bg));
+      }, 7000);
+    }
     const paintProgGrid = () => {
       $('#progGrid').innerHTML = progs.map(p => `
         <a class="prog-card reveal" href="schedule.html">
@@ -139,8 +117,46 @@ const pick = (rows, n) => rows.slice(0, n);
         </a>`).join('');
     };
     paintProgGrid();
-    onLangChange(() => { show(cur); paintProgGrid(); reveal(); });
+    onLangChange(() => { paintProgGrid(); reveal(); });
   }
+
+  /* ---------------- Gawahi Live: the YouTube channel as a broadcast ---------------- */
+  try {
+    const live = await loadLive();
+    if (live.list.length) {
+      let nowIndex = null;
+      const paintLive = () => {
+        const cur = nowIndex == null ? null : live.list[nowIndex];
+        const title = $('#liveTitle');
+        if (cur) { title.textContent = cur.title; title.className = 'live-title' + (latinClass(cur.title) ? ' latin' : ''); }
+        const upcoming = listing(live, Date.now(), 4).slice(1);
+        $('#liveNext').innerHTML = upcoming.map(v => `
+          <li>
+            <img src="${esc(thumb(v.id))}" alt="" loading="lazy">
+            <span><time>${esc(fmtClock(v.start))}</time>
+              <b${latinClass(v.title)}>${esc(v.title)}</b></span>
+          </li>`).join('');
+      };
+      // poster straight away, so there is no black box while YouTube loads
+      const first = listing(live, Date.now(), 1)[0];
+      $('#liveScreen').style.backgroundImage = `url('https://i.ytimg.com/vi/${first.id}/hqdefault.jpg')`;
+      nowIndex = first.index; paintLive();
+
+      const ctl = await mountLive(live, 'livePlayer', {
+        onProgramme: i => { nowIndex = i; paintLive(); },
+        onMuted: m => { $('#liveSound').hidden = !m; },
+        onDrift: d => { $('#liveBack').hidden = !d; },
+        onFail: () => {
+          $('#liveScreen').insertAdjacentHTML('beforeend',
+            `<a class="live-fail" href="${esc(safeUrl(live.channel.url))}" target="_blank" rel="noopener">${esc(t('live.fail'))}</a>`);
+        },
+      });
+      $('#liveSound').addEventListener('click', () => ctl && ctl.unmute());
+      $('#liveBack').addEventListener('click', () => ctl && ctl.backToLive());
+      setInterval(paintLive, 60000);          // keep "up next" times honest
+      onLangChange(paintLive);
+    }
+  } catch (e) { console.warn('live channel unavailable', e); }
 
   mountSheet('body');
   reveal();
