@@ -9,6 +9,8 @@ Static HTML, CSS and ES modules. No build step, no framework, no dependencies.
 
 ---
 
+**Live:** https://gawahi-tv.vercel.app — Vercel serves the files as a static site (`vercel.json` sets clean URLs and cache headers); no environment variables. The Python scripts in `scripts/` regenerate `data/*.json` and are run by hand, not at deploy time.
+
 ## Run it
 
 ```bash
